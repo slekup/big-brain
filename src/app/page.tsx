@@ -10,13 +10,13 @@ export default function Home() {
           <div className="flex justify-center">
             <Link
               href="/decks"
-              className="block py-7 w-60 m-2 rounded-xl bg-purple-500 hover:bg-purple-600 active:bg-purple-700 transition text-white font-bold text-xl"
+              className="block py-7 w-60 m-2 rounded-xl bg-purple-500 hover:bg-purple-600 active:bg-purple-700 transition text-white font-bold text-xl active:scale-95"
             >
               Decks
             </Link>
             <Link
               href="/study"
-              className="block py-7 w-60 m-2 rounded-xl bg-lime-500 hover:bg-lime-600 active:bg-lime-700 transition text-white font-bold text-xl"
+              className="block py-7 w-60 m-2 rounded-xl bg-lime-500 hover:bg-lime-600 active:bg-lime-700 transition text-white font-bold text-xl active:scale-95"
             >
               Study
             </Link>
@@ -24,15 +24,15 @@ export default function Home() {
           <div className="flex justify-center">
             <Link
               href="/community"
-              className="block py-7 w-60 m-2 rounded-xl bg-blue-500 hover:bg-blue-600 active:bg-blue-700 transition text-white font-bold text-xl"
+              className="block py-7 w-60 m-2 rounded-xl bg-blue-500 hover:bg-blue-600 active:bg-blue-700 transition text-white font-bold text-xl active:scale-95"
             >
               Community
             </Link>
             <Link
-              href="/stats"
-              className="block py-7 w-60 m-2 rounded-xl bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition text-white font-bold text-xl"
+              href="/analysis"
+              className="block py-7 w-60 m-2 rounded-xl bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition text-white font-bold text-xl active:scale-95"
             >
-              Stats
+              Analysis
             </Link>
           </div>
         </div>

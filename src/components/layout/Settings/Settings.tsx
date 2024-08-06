@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import Appearance from "./Appearance";
 import Backups from "./Backups";
@@ -11,12 +10,12 @@ interface Props {
 
 const Settings = ({ open, setOpen }: Props) => {
   type Tabs = "appearance" | "backups" | "about";
-  let [tab, setTab] = useState<Tabs>("appearance");
+  const [tab, setTab] = useState<Tabs>("appearance");
 
   return (
     <>
       <div
-        className={`z-50 bg-black/20 fixed top-0 left-0 h-full w-full transition-[opacity,visibility] duration-300 ${!open && "invisible opacity-0"}`}
+        className={`z-50 bg-black/40 backdrop-blur-md fixed top-0 left-0 h-full w-full transition-[opacity,visibility] duration-300 ${!open && "invisible opacity-0"}`}
         onClick={() => setOpen(false)}
       ></div>
       <div
@@ -26,7 +25,7 @@ const Settings = ({ open, setOpen }: Props) => {
           {["appearance", "backups", "about"].map((t, i) => (
             <button
               key={i}
-              className={`px-5 py-2.5 my-1.5 ml-1.5 rounded-lg font-bold text-sm transition hover:bg-gray-200 active:bg-gray-300 ${tab == t && "bg-gray-200"}`}
+              className={`px-5 py-2 my-[0.45rem] ml-1.5 rounded-lg font-bold transition active:scale-95 ${tab == t ? "bg-black text-white" : "hover:bg-gray-200 active:bg-gray-300"}`}
               onClick={() => setTab(t as Tabs)}
             >
               {t.charAt(0).toUpperCase() + t.slice(1)}

@@ -26,8 +26,8 @@ const links: SidebarLink[] = [
     href: "/community",
   },
   {
-    title: "Stats",
-    href: "/stats",
+    title: "Analysis",
+    href: "/analysis",
   },
 ];
 
@@ -39,11 +39,11 @@ const SidebarButton = ({
   href: string | undefined;
 }) => {
   const pathname = usePathname();
-  const baseUrl = pathname;
+  const baseUrl = "/" + pathname.split("/")[1];
 
   const btn = (
     <button
-      className={`text-left my-1 py-3 hover:px-5 active:px-5 rounded-lg font-bold block w-full hover:bg-gray-200 active:bg-gray-300 transition-[background,padding] ${baseUrl == href ? "bg-gray-200 px-5" : "bg-white px-3"}`}
+      className={`text-left my-1 py-3 hover:px-5 active:px-5 rounded-lg font-bold block w-full transition-[background,padding,transform] active:scale-95 ${baseUrl == href ? "bg-black text-white px-5" : "bg-white px-3 hover:bg-gray-200 active:bg-gray-300"}`}
     >
       {title}
     </button>
@@ -53,7 +53,7 @@ const SidebarButton = ({
 };
 
 const Sidebar = () => {
-  let [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -70,7 +70,7 @@ const Sidebar = () => {
           ))}
           <div className="absolute bottom-0 block w-full -ml-3 px-3 py-2">
             <button
-              className="my-1 py-3 rounded-lg font-bold block w-full border-2 border-gray-200 hover:bg-gray-200 hover:border-gray-400 active:bg-gray-300 active:border-black"
+              className={`my-1 py-3 rounded-lg font-bold block w-full border-2 transition active:scale-95 ${open ? "bg-gray-300 border-black" : "active:border-black border-gray-200 hover:bg-gray-200 hover:border-gray-400 active:bg-gray-300"}`}
               onClick={() => setOpen(true)}
             >
               Settings
