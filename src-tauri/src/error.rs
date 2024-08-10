@@ -5,6 +5,15 @@ pub enum AppError {
 
     #[error("SQLX Error: {0}")]
     Sqlx(#[from] sqlx::Error),
+
+    #[error("Error: {0}")]
+    Custom(String),
+}
+
+impl AppError {
+    pub fn new<T>(message: &str) -> AppResult<T> {
+        Err(AppError::Custom(message.to_string()))
+    }
 }
 
 impl serde::Serialize for AppError {

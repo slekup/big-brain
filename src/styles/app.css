@@ -2,18 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./theme.css";
+@import "./themes.css";
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--fg));
   background: rgb(var(--bg));
+  color: rgb(var(--fg));
   overflow-y: scroll;
   overflow-x: clip;
-  word-break: break-all;
+  transition-property: background color;
+  transition-duration: 500ms;
 }
 
 html,
@@ -30,6 +31,10 @@ body {
 
 *:focus {
   outline: none;
+}
+
+input {
+  cursor: text;
 }
 
 .no-select {
@@ -165,5 +170,14 @@ input[type="number"]::-webkit-outer-spin-button {
     transform: translateX(0);
     max-height: 100px;
     grid-template-rows: 1fr;
+  }
+}
+
+@keyframes toast-time-progress {
+  0% {
+    transform: scaleX(100%);
+  }
+  100% {
+    transform: scaleX(0%);
   }
 }

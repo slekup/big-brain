@@ -1,0 +1,10 @@
+.editor .tiptap {
+  padding: 1.25rem;
+  border-width: 0 2px 2px 2px;
+  border-color: rgb(var(--border));
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  cursor: text;
+}

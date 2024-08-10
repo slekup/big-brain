@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-const isProd = process.env.NODE_ENV === "production";
-const internalHost = process.env.TAURI_DEV_HOST || "localhost";
+// const isProd = process.env.NODE_ENV === "production";
+// const internalHost = process.env.TAURI_DEV_HOST || "localhost";
 
 const nextConfig = {
-  strictMode: false,
+  reactStrictMode: false,
   output: "export",
   images: {
     unoptimized: true,

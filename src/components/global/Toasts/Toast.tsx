@@ -6,7 +6,7 @@ import { Toast as ToastInterface, ToastType } from "@typings/core";
 import { HiCheckCircle } from "react-icons/hi";
 import { IoWarning } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { removeToast } from "@slices/toasts.slice";
+import { removeToast, resetTime } from "@slices/toasts.slice";
 
 const typeBorder = {
   [ToastType.Info]: "border-primary/20",
@@ -20,6 +20,13 @@ const typeBackground = {
   [ToastType.Success]: "bg-success/10",
   [ToastType.Warning]: "bg-warning/10",
   [ToastType.Error]: "bg-danger/10",
+};
+
+const typeBackgroundFull = {
+  [ToastType.Info]: "bg-primary",
+  [ToastType.Success]: "bg-success",
+  [ToastType.Warning]: "bg-warning",
+  [ToastType.Error]: "bg-danger",
 };
 
 const typeIcon = {
@@ -36,6 +43,7 @@ interface Props {
 const Toast = ({ toast }: Props) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState<boolean>(true);
+  const [animationKey, setAnimationKey] = useState(Date.now());
 
   const handleClose = useCallback(() => {
     setVisible(false);
@@ -43,6 +51,7 @@ const Toast = ({ toast }: Props) => {
   }, [dispatch, toast]);
 
   useEffect(() => {
+    setAnimationKey(Date.now());
     const timer = setTimeout(
       () => {
         handleClose();
@@ -55,29 +64,35 @@ const Toast = ({ toast }: Props) => {
 
   return (
     <div
-      className={`relative grid max-w-80 rounded-lg border-border bg-bg shadow-lg transition-all duration-500 ${
+      className={`relative overflow-hidden grid max-w-80 rounded-lg border-border bg-bg shadow-lg transition-all duration-500 ${
         visible
           ? `mb-2 animate-[toast-enter_300ms_ease] grid-rows-[1fr] border ${typeBorder[toast.type]}`
           : "translate-x-full grid-rows-[0fr] opacity-0"
       }`}
+      onMouseOver={() => {
+        dispatch(resetTime(toast.id as string));
+      }}
     >
+      <div
+        className={`absolute h-0.5 w-full origin-right ${typeBackgroundFull[toast.type]}`}
+        key={animationKey}
+        style={{
+          animationDuration: `${toast.time}ms`,
+          animationName: "toast-time-progress",
+        }}
+      ></div>
       <div
         className="overflow-hidden transition-all duration-500"
         id={toast.id}
       >
-        {/* Header */}
         <div
           className={`flex h-10 justify-between border-b p-1 ${typeBorder[toast.type]}`}
         >
           <div className="flex p-1">
-            {/* Icon */}
             <div className="mr-1">{typeIcon[toast.type]}</div>
-
-            {/* Title */}
             <p className="my-0.5 text-sm font-bold text-fg">{toast.title}</p>
           </div>
 
-          {/* Close Button */}
           <button
             className="rounded-3xl p-1.5 text-fg-tertiary hover:bg-bg-secondary active:bg-bg-tertiary transition"
             onClick={handleClose}
@@ -86,7 +101,6 @@ const Toast = ({ toast }: Props) => {
           </button>
         </div>
 
-        {/* Content */}
         {toast.description && (
           <div className={`px-4 pb-4 pt-3 ${typeBackground[toast.type]}`}>
             <p className="mt-0.5 text-sm leading-4 text-fg-secondary">

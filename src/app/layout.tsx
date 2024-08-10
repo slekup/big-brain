@@ -1,12 +1,15 @@
 "use client";
 
-import "@styles/app.css";
-import Sidebar from "@components/layout/Sidebar";
-import Toasts from "../components/global/Toasts/Toasts";
 import { Provider } from "react-redux";
-import { store } from "../store";
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { ThemeProvider } from "next-themes";
+
+import Sidebar from "@components/layout/Sidebar";
+import Toasts from "../components/global/Toasts/Toasts";
+import { store } from "../store";
+
+import "@styles/app.css";
 
 export default function RootLayout({
   children,
@@ -34,13 +37,21 @@ export default function RootLayout({
   }, [pathname, params]);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="absolute flex w-full h-full no-select cursor-default">
-        <Provider store={store}>
-          <Sidebar />
-          <div className="relative h-full w-full">{children}</div>
-          <Toasts />
-        </Provider>
+        <ThemeProvider
+          enableSystem={false}
+          defaultTheme={"light"}
+          themes={["light", "dark", "raspberry"]}
+          attribute={"data-theme"}
+          enableColorScheme={false}
+        >
+          <Provider store={store}>
+            <Sidebar />
+            <div className="relative h-full w-full">{children}</div>
+            <Toasts />
+          </Provider>
+        </ThemeProvider>
       </body>
     </html>
   );

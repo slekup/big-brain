@@ -1,0 +1,16 @@
+export enum QuestionType {
+  MultiChoice = "multi_choice",
+  Binary = "binary",
+  FillBlank = "fill_blank",
+  ShortAnswer = "short_answer",
+  LongAnswer = "long_answer",
+  Match = "match",
+  Sequence = "sequence",
+  WordDrag = "word_drag",
+  Dropdown = "dropdown",
+  Numeric = "numeric",
+  Hotspot = "hotspot",
+  Code = "code",
+  Math = "math",
+  Geolocation = "geolocation",
+}

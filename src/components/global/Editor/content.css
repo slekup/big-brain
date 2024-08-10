@@ -1,0 +1,137 @@
+.tiptap {
+  margin: 0;
+}
+
+.tiptap :first-child {
+  margin-top: 0;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding: 0 1rem;
+  margin: 1.25rem 1rem 1.25rem 0.4rem;
+}
+
+.tiptap ol li p,
+.tiptap ul li pi {
+  margin: 0.25em 0 0.25rem 0;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3,
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  line-height: 1;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  text-wrap: pretty;
+  font-weight: 700;
+}
+
+.tiptap h1,
+.tiptap h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tiptap h1 {
+  font-size: 2rem;
+}
+
+.tiptap h2 {
+  font-size: 1.75rem;
+}
+
+.tiptap h3 {
+  font-size: 1.5rem;
+}
+
+.tiptap h4,
+.tiptap h5,
+.tiptap h6 {
+  font-size: 1.25rem;
+}
+
+.tiptap code {
+  background: rgb(var(--bg-secondary));
+  color: rgb(var(--fg));
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  padding: 0.25em 0.3em;
+}
+
+.tiptap pre {
+  background: rgb(var(--bg-secondary));
+  color: rgb(var(--fg));
+  border-radius: 0.5rem;
+  font-family: "JetBrainsMono", monospace;
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+}
+
+.tiptap pre code {
+  background: none;
+  color: inherit;
+  font-size: 0.8rem;
+  padding: 0;
+}
+
+.tiptap blockquote {
+  border-left: 3px solid rgb(var(--border-hover));
+  color: rgba(var(--fg-secondary));
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+}
+
+.tiptap hr {
+  border: none;
+  height: 2px;
+  width: 100%;
+  background: rgb(var(--border));
+  margin: 2rem 0;
+}
+
+.tiptap a {
+  color: rgb(var(--link));
+}
+
+.tiptap a:hover {
+  text-decoration: underline;
+}
+
+.tiptap table {
+  margin: 1.25rem 0;
+  border-width: 1px 0 0 1px;
+  border-color: rgb(var(--border));
+  border-collapse: collapse;
+  table-layout: auto;
+  color: rgb(var(--fg-secondary));
+  width: 100%;
+  word-break: break-all;
+}
+
+.tiptap th,
+.tiptap td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(var(--fg-tertiary));
+  border-collapse: collapse;
+  color: rgb(var(--fg));
+}
+
+.tiptap th {
+  font-weight: 700;
+}
+
+.tiptap td {
+  font-weight: 500;
+}

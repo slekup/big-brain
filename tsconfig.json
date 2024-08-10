@@ -18,15 +18,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
       "@app/*": ["./src/app/*"],
       "@components/*": ["./src/components/*"],
+      "@components": ["./src/components/index"],
       "@slices/*": ["./src/slices/*"],
       "@styles/*": ["./src/styles/*"],
       "@typings/*": ["./src/typings/*"],
       "@utils/*": ["./src/utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/decks/deck"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "src-tauri"]
 }

@@ -1,20 +1,23 @@
-use std::time::Instant;
-
 use serde::{Deserialize, Serialize};
 use sqlx::prelude::FromRow;
 use tauri::State;
+use tokio::time::Instant;
 use tracing::info;
 
-use crate::{error::AppResult, state::AppState};
+use crate::{
+    error::{AppError, AppResult},
+    state::AppState,
+    utils::image::save_image,
+};
 
 #[derive(FromRow, Serialize)]
 pub struct Deck {
-    id: i32,
-    parent_id: Option<i32>,
+    id: i64,
+    parent_id: Option<i64>,
     name: String,
     description: Option<String>,
     color: String,
-    cover_image: Option<Vec<u8>>,
+    cover_image: Option<String>,
     archived: bool,
     created_at: String,
     updated_at: String,
@@ -27,26 +30,37 @@ pub struct NewDeck {
     description: Option<String>,
     color: String,
     cover_image: Option<Vec<u8>>,
+    cover_image_type: Option<String>,
 }
 
 #[tauri::command]
-pub async fn new_deck(deck: NewDeck, state: State<'_, AppState>) -> AppResult<i32> {
+pub async fn new_deck(deck: NewDeck, state: State<'_, AppState>) -> AppResult<i64> {
     let start = Instant::now();
     let state = state.lock().await;
 
-    let query = "INSERT INTO decks (parent_id, name, description, color, cover_image, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    let cover_image: Option<String> = if let Some(image_data) = deck.cover_image {
+        if let Some(image_type) = deck.cover_image_type {
+            Some(save_image(image_data, image_type).await?)
+        } else {
+            return AppError::new("Image type not provided");
+        }
+    } else {
+        None
+    };
+
+    let query = "INSERT INTO deck (parent_id, name, description, color, cover_image, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
     let result = sqlx::query(query)
         .bind(deck.parent_id)
         .bind(&deck.name)
         .bind(deck.description)
         .bind(deck.color)
-        .bind(deck.cover_image)
+        .bind(cover_image)
         .bind(chrono::Utc::now().to_rfc3339())
         .bind(chrono::Utc::now().to_rfc3339())
         .execute(&state.pool)
         .await?;
 
-    let id = result.last_insert_rowid() as i32;
+    let id = result.last_insert_rowid();
 
     info!(
         "Created new deck \"{}\" in {:?}",
@@ -62,7 +76,7 @@ pub struct DeckPreview {
     id: i32,
     name: String,
     color: String,
-    cover_image: Option<Vec<u8>>,
+    cover_image: Option<String>,
 }
 
 #[tauri::command]
@@ -77,7 +91,7 @@ pub async fn get_decks(id: Option<i32>, state: State<'_, AppState>) -> AppResult
     };
 
     let query = format!(
-        "SELECT id, name, color, cover_image FROM decks WHERE archived = 0{}",
+        "SELECT id, name, color, cover_image FROM deck WHERE archived = 0{}",
         id_filter
     );
     let decks = sqlx::query_as::<_, DeckPreview>(&query)
@@ -95,7 +109,7 @@ pub async fn get_deck(id: i32, state: State<'_, AppState>) -> AppResult<Deck> {
     let state = state.lock().await;
 
     let query = format!(
-        "SELECT id, parent_id, name, description, color, cover_image, archived, created_at, updated_at FROM decks WHERE id = {}",
+        "SELECT id, parent_id, name, description, color, cover_image, archived, created_at, updated_at FROM deck WHERE id = {}",
         id
     );
     let deck = sqlx::query_as::<_, Deck>(&query)
@@ -117,7 +131,7 @@ pub async fn get_deck_name(id: i32, state: State<'_, AppState>) -> AppResult<Str
         name: String,
     }
 
-    let query = format!("SELECT name FROM decks WHERE id = {}", id);
+    let query = format!("SELECT name FROM deck WHERE id = {}", id);
     let deck = sqlx::query_as::<_, DeckName>(&query)
         .fetch_one(&state.pool)
         .await?;
@@ -151,7 +165,7 @@ pub async fn get_deck_crumbs(id: i32, state: State<'_, AppState>) -> AppResult<V
 
     while !at_root {
         let query = format!(
-            "SELECT id, parent_id, name FROM decks WHERE id = {}",
+            "SELECT id, parent_id, name FROM deck WHERE id = {}",
             current_id
         );
         let deck = sqlx::query_as::<_, DeckCrumb>(&query)

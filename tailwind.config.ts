@@ -27,6 +27,14 @@ const config: Config = {
         `rgba(var(--secondary-active), ${opacityValue ?? 1})`,
       "secondary-fg": ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--secondary-fg), ${opacityValue ?? 1})`,
+      menu: ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--menu), ${opacityValue ?? 1})`,
+      "menu-fg": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--menu-fg), ${opacityValue ?? 1})`,
+      "menu-hover": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--menu-hover), ${opacityValue ?? 1})`,
+      "menu-active": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--menu-active), ${opacityValue ?? 1})`,
       // Text
       fg: ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--fg), ${opacityValue ?? 1})`,
@@ -37,6 +45,8 @@ const config: Config = {
       // Background
       bg: ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--bg), ${opacityValue ?? 1})`,
+      "bg-modal": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--bg-modal), ${opacityValue ?? 1})`,
       "bg-secondary": ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--bg-secondary), ${opacityValue ?? 1})`,
       "bg-tertiary": ({ opacityValue }: { opacityValue: string }) =>
@@ -79,6 +89,12 @@ const config: Config = {
         `rgba(var(--input-focus), ${opacityValue ?? 1})`,
       border: ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--border), ${opacityValue ?? 1})`,
+      "border-hover": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--border-hover), ${opacityValue ?? 1})`,
+      "border-active": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--border-active), ${opacityValue ?? 1})`,
+      "border-focus": ({ opacityValue }: { opacityValue: string }) =>
+        `rgba(var(--border-focus), ${opacityValue ?? 1})`,
       // Header
       header: ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--header), ${opacityValue ?? 1})`,
@@ -86,12 +102,6 @@ const config: Config = {
         `rgba(var(--header-border), ${opacityValue ?? 1})`,
       "header-fg": ({ opacityValue }: { opacityValue: string }) =>
         `rgba(var(--header-fg), ${opacityValue ?? 1})`,
-      menu: ({ opacityValue }: { opacityValue: string }) =>
-        `rgba(var(--menu), ${opacityValue ?? 1})`,
-      "menu-border": ({ opacityValue }: { opacityValue: string }) =>
-        `rgba(var(--menu-border), ${opacityValue ?? 1})`,
-      "menu-fg": ({ opacityValue }: { opacityValue: string }) =>
-        `rgba(var(--menu-fg), ${opacityValue ?? 1})`,
     } as unknown as RecursiveKeyValuePair<string, string>,
     extend: {
       width: {
